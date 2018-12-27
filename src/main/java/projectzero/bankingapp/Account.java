@@ -9,8 +9,8 @@ public class Account {
 	
 	public Account() {
 		this.name = "Checking";
-		this.accountNumber();
 		this.balance = 0;
+		this.accountNumber();
 	}
 	public Account(String name) {
 		this.name = name;
@@ -29,23 +29,31 @@ public class Account {
 		this.balance = amount;
 		this.accountNumber();
 	}
-	private int accountNumber() {
+	private void accountNumber() {
 		Random rand = new Random();
-		this.accountNumber = rand.nextInt(2000000000);
-		return accountNumber;
+		this.accountNumber = rand.nextInt(2000000000)+1;
+	}
+	public int getAccountNumber() {
+		return this.accountNumber;
 		
 	}
 	public String[] info() {
 		String[] info = {this.name, String.valueOf(this.accountNumber), String.valueOf(this.balance)};
 		return info;
 	}
-	public void withdraw(double amount) {
+	public Boolean withdraw(double amount) {
+		Boolean rs = false;
 		if(this.balance > amount) {
 			this.balance = (this.balance - amount);
+			rs = true;
 		}
+		return rs;
 	}
 	public void deposit(double amount) {
 		this.balance = this.balance + amount;
+	}
+	public void cancel() {
+		//TODO
 	}
 
 }

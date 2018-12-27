@@ -11,13 +11,16 @@ import org.junit.Test;
 public class BankTest 
    
 {
-    @SuppressWarnings("unused")
+   
 	@Test
     public void CustomerInitiated() {
     	String name = "Justice";
     	String username = "jfears";
     	String password = "smile";
     	Customer customer = new Customer(name, username, password);
+    	assertEquals(customer.name, name);
+    	assertEquals(customer.username, username);
+    	assertEquals(customer.password, password);
     }
 	@Test
     public void CostumerUsernameTest()
@@ -102,12 +105,13 @@ public class BankTest
     	assertEquals(account2.balance, checkpos, 0);
     }
     
-    @SuppressWarnings("unused")
 	@Test
     public void EmployeeInitiated() {
     	String name = "Taylor";
     	int employeeId = 1; 
     	Employee employee = new Employee(name, employeeId);
+    	assertEquals(employee.name, name);
+    	assertEquals(employee.employeeId, employeeId, 0);
     }
     
     @Test

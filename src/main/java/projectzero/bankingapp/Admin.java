@@ -23,7 +23,7 @@ public class Admin extends Worker{
 	}
 
 	public void cancelAccount(Account account) {
-		account = null;
+		account.cancel();
 	}
 
 }
