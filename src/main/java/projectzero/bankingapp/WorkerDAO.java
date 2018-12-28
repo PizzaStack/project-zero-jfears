@@ -38,5 +38,20 @@ public class WorkerDAO {
 		return matches;
 		
 	}
+	public Boolean checkAdmin(String username) {
+		String sql = "select isAdmin from employee where empusername=\'" + username + "\'";
+		Boolean isAdmin = false;
+		try {
+			Statement statement = dao.connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next()) {
+				isAdmin = rs.getBoolean("isadmin");
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();}
+		return isAdmin;
+	}
+
 
 }

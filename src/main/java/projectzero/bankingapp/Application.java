@@ -1,24 +1,18 @@
 package projectzero.bankingapp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class Application {
-	protected String[] info;
-	protected List<String> jointInfo;
+	protected int cusId;
+	protected int jointInfo[] = new int[2];
 	protected Status status = Status.PENDING;
 	
-	public Application(String[] info) {
-		this.info = info;
+	public Application(int cusId) {
+		this.cusId = cusId;
 	}
 	
-	public Application(String[] info2, String[] info3) {
-		this.jointInfo = new ArrayList<String>(info2.length + info3.length);
-	    Collections.addAll(jointInfo, info2);
-	    Collections.addAll(jointInfo, info3);
-	    jointInfo.toArray(new String[jointInfo.size()]);
+	public Application(int cusId, int cusId2) {
+		this.jointInfo[0] = cusId;
+		this.jointInfo[1] = cusId2;
+		
 	}
 
 	public void makeDecision(Status decision) {

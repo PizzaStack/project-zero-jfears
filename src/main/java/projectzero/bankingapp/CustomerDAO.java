@@ -108,6 +108,48 @@ public class CustomerDAO {
 		return names;
 	}
 
+	public ArrayList<Integer> getCusIds(){
+		String sql = "select cusid from customer";
+		ArrayList<Integer> cusIds = new ArrayList<>();
+		try {
+			Statement statement = dao.connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next())
+				cusIds.add(rs.getInt("cusid"));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return cusIds;
+	}
+	
+	public ArrayList<String> getCusNames(){
+		String sql = "select cusname from customer";
+		ArrayList<String> cusNames = new ArrayList<>();
+		try {
+			Statement statement = dao.connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next())
+				cusNames.add(rs.getString("cusname"));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return cusNames;
+	}
+		
+	public ArrayList<String> getCusUsernames(){
+		String sql = "select cususername from customer";
+		ArrayList<String> cusUsernames = new ArrayList<>();
+		try {
+			Statement statement = dao.connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if(rs.next())
+				cusUsernames.add(rs.getString("cususername"));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return cusUsernames;
+	}
+	
 	public Customer applyJoint(int idWith) {
 		String sql = "select * from customer where cusid=\'" + idWith + "\'";
 		Customer customer2 = new Customer();

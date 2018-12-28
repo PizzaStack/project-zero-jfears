@@ -26,11 +26,11 @@ public class Customer {
 		
 	}
 	public Application applyForAccount() {
-		Application application = new Application(this.info());
+		Application application = new Application(this.cusId);
 		return application;
 	}
 	public Application applyJointAccount(Customer customer2) {
-		Application application = new Application(this.info(), customer2.info());
+		Application application = new Application(this.cusId, customer2.cusId);
 		return application;
 		
 	}
