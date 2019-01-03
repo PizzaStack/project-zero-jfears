@@ -74,6 +74,7 @@ public class CustomerDAO {
 		}
 		return customer;
 	}
+	
 
 	public ArrayList<Double> getBalance(Customer customer) {
 		String sql = "select accbal from account where cusid=" + customer.cusId;
