@@ -52,6 +52,4 @@ public class WorkerDAO {
 			e.printStackTrace();}
 		return isAdmin;
 	}
-
-
 }

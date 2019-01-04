@@ -9,8 +9,15 @@ public class ApplicationDAO {
 	private DAOParent dao = new DAOParent();
 	
 	public void updateTable(Application application) {
-		String sql = "insert into applications values("+ application.cusId + ",\'" + application.status 
-					+ "\'," + "\'f\')"; 
+		String sql = "";
+		if(application.jointId == 0) {
+			sql = "insert into applications values("+ application.cusId + ",\'" + application.status 
+					+ "\'," + "\'f\',"+ application.appId + ", "+ application.jointId + ")";
+		}
+		else {
+			sql = "insert into applications values(" + application.cusId + ",\'" + application.status
+					+ "\'," + "\'t\'," + application.appId + ", " + application.jointId + ")";
+		}
 		try {
 			Statement statement = dao.connection.createStatement();
 			statement.execute(sql);

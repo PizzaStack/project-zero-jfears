@@ -7,5 +7,4 @@ public class Employee extends Worker {
 		this.name = name;
 		this.employeeId = employeeId;
 	}
-
 }

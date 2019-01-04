@@ -40,7 +40,7 @@ public class CustomerDAO {
 	}
 	
 	public Boolean addToDB(Customer customer) {
-		String sql = "instert into customer values("+ customer.cusId+", \'"+customer.name+"\', \'"+ customer.username+"\', \'"+customer.password+"\')";
+		String sql = "insert into customer values("+ customer.cusId+", \'"+customer.name+"\', \'"+ customer.username+"\', \'"+customer.password+"\')";
 		Boolean added = false;
 		try {
 			Statement statement = dao.connection.createStatement();
@@ -115,7 +115,7 @@ public class CustomerDAO {
 		try {
 			Statement statement = dao.connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			if(rs.next())
+			while(rs.next())
 				cusIds.add(rs.getInt("cusid"));
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class CustomerDAO {
 		try {
 			Statement statement = dao.connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			if(rs.next())
+			while(rs.next())
 				cusNames.add(rs.getString("cusname"));
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -143,7 +143,7 @@ public class CustomerDAO {
 		try {
 			Statement statement = dao.connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			if(rs.next())
+			while(rs.next())
 				cusUsernames.add(rs.getString("cususername"));
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -152,15 +152,15 @@ public class CustomerDAO {
 	}
 	
 	public Customer applyJoint(int idWith) {
-		String sql = "select * from customer where cusid=\'" + idWith + "\'";
+		String sql = "select * from customer where cusid=" + idWith;
 		Customer customer2 = new Customer();
+		customer2.cusId = idWith;
 		
 		try {
 			Statement statement = dao.connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			if(rs.next()) {
 				customer2.name = rs.getString("cusname");
-				customer2.cusId = rs.getInt("cusid");
 				customer2.password = rs.getString("cususername");
 				customer2.username = rs.getString("cuspassword");
 			}

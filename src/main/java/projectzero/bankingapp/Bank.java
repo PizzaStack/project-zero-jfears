@@ -10,6 +10,8 @@ public class Bank {
     	System.out.println( "\tWelcome to the Bank of Justice!" );
         System.out.print("\t\t   Menu\n\tRegister as a new customer enter\t\t1\n\tLog-in\t\t\t\t\t\t2\n");
         int menuChoice = scn.nextInt();
+        int accountAction = 0;
+        int empChoice = 0;
         String username;
         String password;
         CustomerDAO checkCus = new CustomerDAO();
@@ -26,19 +28,20 @@ public class Bank {
     		String cusname = scn.next();
     		System.out.print("\tPlease enter your desired username: ");
     		String cusUsername = scn.next();
-    		while(checkCus.checkUsername(cusUsername)) {
+    		while(!checkCus.checkUsername(cusUsername)) {
     			System.out.print("\tThat username is taken please choose a different user name: ");
     			cusUsername=scn.next();
     		};
     		System.out.print("\tPlease enter your desired password: ");
     		String cusPass = scn.next();
     		Customer registeredCustomer = new Customer(cusname, cusUsername, cusPass);
-    		if(checkCus.addToDB(registeredCustomer));
+    		if(!checkCus.addToDB(registeredCustomer));
     		System.out.println("\tCongradulations " + cusname +" is now registered!");
+    		checkCus.addToDB(registeredCustomer);
     		break;
     	
         case 2:
-        		System.out.println("\tCustomer log-in enter\t\t\t\t1\n\tEmployee login-in enter\t\t\t\t2");
+        		System.out.println("\tCustomer log-in enter\t\t\t\t1\n\tEmployee log-in enter\t\t\t\t2");
         		int loginChoice = scn.nextInt();
         		System.out.print("\tPlease enter your username: ");
         		username = scn.next();
@@ -61,10 +64,10 @@ public class Bank {
         			System.out.println("\n\tWelcome back " + customer.name);
         			System.out.println("\n\tApply for new account \t\t\t\t1\n\tView an account balance(s)\t\t\t2\n\tMake a withdrawl\t\t\t\t3"
         					+"\n\tMake a transfer\t\t\t\t\t4\n\tMake a deposit\t\t\t\t\t5");
+        			accountAction = scn.nextInt();
         		}
         			
     				do {
-						int accountAction = scn.nextInt();
 						switch (accountAction) {
 						case 1:
 							System.out.println("\tWould you like to apply jointly with someone else? (y/n)");
@@ -74,7 +77,7 @@ public class Bank {
 										"\tPlease enter the customer id of the person you would like to apply with: ");
 								int idWith = scn.nextInt();
 								Customer customer2 = checkCus.applyJoint(idWith);
-								Application applicationJoint = customer2.applyJointAccount(customer2);
+								Application applicationJoint = customer.applyJointAccount(customer2);
 								checkApp.updateTable(applicationJoint);
 							} else {
 								Application application = customer.applyForAccount();
@@ -82,6 +85,7 @@ public class Bank {
 								System.out.println("\tYour application has been subbmitted.");
 								break;
 							}
+							break;
 						case 2:
 							System.out.println("\tAccount balances:\n");
 							ArrayList<Double> accBalance = checkCus.getBalance(customer);
@@ -162,6 +166,8 @@ public class Bank {
 						String logOutChoice = scn.next();	
 						if (logOutChoice.equalsIgnoreCase("exit")) {
 								loggedinCus = false;
+								scn.close();
+						   		checkCus.closeConnection();
 								break;
 						}
 							else
@@ -182,18 +188,22 @@ public class Bank {
            				System.out.println("\tMaximum attempts reached, please try again later.");
            				break;
            			}
-           			else 
+        			}
+           			 
            				loggedinEmp = true;
+           				System.out.print("\n\tView applications\t\t\t\t1\n\tView customer information\t\t\t2\n\tView account information\t\t\t3");
+            			if(checkWork.checkAdmin(username)) {
+            				System.out.print("\n\tWithdraw from an account\t\t\t4\n\t"
+            						+ "Deposit into an account\t\t\t\t5\n\t"
+            						+"Transfer between accounts\t\t\t6\n\tCancel an account\t\t\t\t7\n");
+            				empChoice = scn.nextInt();
+            			}
+           			
+        			
+        			
+        			
         			}
-        			System.out.print("\n\tView applications\t\t\t\t1\n\tView customer information\t\t\t2\n\tView account information\t\t\t3");
-        			if(checkWork.checkAdmin(username)) {
-        				System.out.print("\n\tWithdraw from an account\t\t\t4\n\t"
-        						+ "Deposit into an account\t\t\t\t5\n\t"
-        						+"Transfer between accounts\t\t\t6\n\tCancel an account\t\t\t\t7\n");
-        			}
-        			}
-        			do {
-						int empChoice = scn.nextInt();
+        			do { 
 						switch (empChoice) {
 						case 1:
 							System.out.println(
@@ -206,9 +216,9 @@ public class Bank {
 								System.out.print("\t" + cusIds.get(i));
 								System.out.print("\t\t\t\t" + statuses.get(i));
 								if (joints.get(i))
-									System.out.print("\t\t\t\tYes");
+									System.out.print("\t\t\t\t\tYes");
 								else
-									System.out.print("\t\t\t\tNo");
+									System.out.print("\t\t\t\t\tNo");
 								System.out.print("\t\t\t\t" + appIds.get(i) + "\n");
 
 							}
@@ -311,11 +321,21 @@ public class Bank {
 							}
 							break;
 						}
+							System.out.print("\tTo log-out type exit, otherwise enter another menu option number: ");
+							String logOutChoice = scn.next();	
+							if (logOutChoice.equalsIgnoreCase("exit")) {
+									loggedinCus = false;
+									scn.close();
+							   		checkCus.closeConnection();
+									break;
+							}
+								else
+									empChoice = Integer.parseInt(logOutChoice);
+						
 					} while (loggedinEmp);
         			}
         		break;
         		}
-        scn.close();
-   		checkCus.closeConnection();
+        
         }
 }

@@ -16,10 +16,11 @@ public class Customer {
 		this.name = name;
 		this.username = username;
 		this.password = password;
+		setId();
 	}
 	public void setId() {
 		Random rand = new Random();
-		this.cusId = rand.nextInt(2000000000)+1;
+		this.cusId = rand.nextInt(10)+1;
 	}
 	public void setUsername(String username) {
 		this.username = username;
